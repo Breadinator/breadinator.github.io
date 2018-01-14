@@ -35,14 +35,16 @@
 				var cWidth = $(window).width() - 72;
 				$("#content").css({"width":cWidth});
 
-				if ($("#content").height() < $(document).height()) {
+				if ($("#content").height() < $(document).height()) {;
 					$("#content").css({"height":$(document).height()});
+				} else {
+					$("#content").css({"height":"auto"});
 				}
 			}
 
 			function getBlog() {
 				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
-					$("#blog-content").html("");
+					$("#blog-content").html("");console.log(JSON.stringify(data));
 
 					if ($_GET.post !== undefined) {
 						data.reverse().forEach(function(postData) {
@@ -55,7 +57,7 @@
 									var author = postJSON["author"];
 									var contents = postJSON["content"];
 
-									$("#blog-content").html($("#blog-content").html() + "<p><span class=\"title\">" + title + "</span> by " + author + "</p><p><a href=\"index.html\">Go home</a></p>" + "<p>" + contents + "</p>");
+									$("#blog-content").html($("#blog-content").html() + "<p><span class=\"title\">" + title + "</span> by " + author + "</p><p><a href=\"index.html\">Go home</a></p>" + "<p>" + contents + "</p><p><a href=\"index.html\">Go home</a></p><br />");
 								});
 							}
 						});
@@ -72,11 +74,13 @@
 								var author = postJSON["author"];
 								var short = postJSON["short"];
 
-								$("#blog-content").html($("#blog-content").html() + "<p><b>" + title + "</b> by " +  + "</p>" + "<p>" + short + "<br /><br /><a href=\"?post=" + id + "\">Read more</p></p><hr />");
+								$("#blog-content").html($("#blog-content").html() + "<p><b>" + title + "</b> by " + author + "</p>" + "<p>" + short + "<br /><br /><a href=\"?post=" + id + "\">Read more</p></p><hr />");
 							});
 						});
 					}
 				});
+
+				resize();
 			}
 
 			window.onresize = resize;
