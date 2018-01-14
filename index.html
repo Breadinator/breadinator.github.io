@@ -28,7 +28,7 @@
 				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
 					$("#blog-content").html("");
 
-					data.forEach(function(postData) {
+					data.reverse().forEach(function(postData) {
 						var raw = postData["download_url"];
 						$.get(raw, function(postJSON) {
 							postJSON = JSON.parse(postJSON)[0];
