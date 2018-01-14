@@ -31,3 +31,16 @@ body {
 	padding-right: 8px;
 	background-color: #ECECEC;
 }
+
+#content a {
+	text-decoration: none;
+	background-color: #C30000;
+	color: #fff;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.title {
+	font-size: 1.5em;
+	font-weight: bold;
+}

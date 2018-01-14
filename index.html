@@ -7,9 +7,25 @@
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 
+		<!-- LIBRARIES -->
 		<script src="scripts/jquery-3.2.1.min.js"></script>
 		<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
+
+		<!-- MY JS -->
 		<script>
+			function GETParams(qs) {
+				qs = qs.split("+").join(" ");
+				var params = {},
+				    tokens,
+				    re = /[?&]?([^=]+)=([^&]*)/g;
+
+				while (tokens = re.exec(qs)) {
+					params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+				}
+
+				return params;
+			}
+
 			function onLoad() {
 				resize();
 				getBlog();
@@ -28,20 +44,44 @@
 				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
 					$("#blog-content").html("");
 
-					data.reverse().forEach(function(postData) {
-						var raw = postData["download_url"];
-						$.get(raw, function(postJSON) {
-							postJSON = JSON.parse(postJSON)[0];
+					if ($_GET.post !== undefined) {
+						data.reverse().forEach(function(postData) {
+							if (postData.name == $_GET.post + ".json") {
+								var raw = postData["download_url"];
+								$.get(raw, function(postJSON) {
+									postJSON = JSON.parse(postJSON)[0];
 
-							var title = postJSON["title"];
-							var contents = postJSON["content"];
-							$("#blog-content").html($("#blog-content").html() + "<h2>" + title + "</h2>" + "<p>" + contents + "</p><hr />");
+									var title = postJSON["title"];
+									var author = postJSON["author"];
+									var contents = postJSON["content"];
+
+									$("#blog-content").html($("#blog-content").html() + "<p><span class=\"title\">" + title + "</span> by " + author + "</p><p><a href=\"index.html\">Go home</a></p>" + "<p>" + contents + "</p>");
+								});
+							}
 						});
-					});
+					} else {
+						var i = 1;
+						data.reverse().forEach(function(postData) {
+							var raw = postData["download_url"];
+							var id = postData["name"];
+							id = id.replace(".json", "");
+							$.get(raw, function(postJSON) {
+								postJSON = JSON.parse(postJSON)[0];
+
+								var title = postJSON["title"];
+								var author = postJSON["author"];
+								var short = postJSON["short"];
+
+								$("#blog-content").html($("#blog-content").html() + "<p><b>" + title + "</b> by " +  + "</p>" + "<p>" + short + "<br /><br /><a href=\"?post=" + id + "\">Read more</p></p><hr />");
+							});
+						});
+					}
 				});
 			}
 
 			window.onresize = resize;
+
+			var $_GET = GETParams(document.location.search);
 		</script>
 	</head>
 
@@ -53,7 +93,7 @@
 		</div>
 
 		<div id="content"><br />
-			<div id="blog-content">Loading...</div>
+			<div id="blog-content"><p>Loading...</p><br /></div>
 		</div>
 
 	</body>
