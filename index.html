@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css" />
 
 		<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 		<script>
 			function onLoad() {
 				resize();
@@ -19,6 +20,12 @@
 				if ($("#content").height() < $(document).height()) {
 					$("#content").css({"height":$(document).height()});
 				}
+			}
+
+			function getBlog() {
+				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
+					//Do something
+				});
 			}
 
 			window.onresize = resize;
