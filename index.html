@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Breadinator - Home</title>
+
+		<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script>
+			function onLoad() {
+				resize();
+			}
+
+			function resize() {
+				var cWidth = $(window).width() - 72;
+				$("#content").css({"width":cWidth});
+
+				var docminnav = $(document).height() - $("#navbar").height() - 4;
+				if ($("#content").height() < $(document).height() - $("#navbar").height()) {
+					$("#content").css({"height":docminnav});
+				}
+			}
+
+			window.onresize = resize;
+		</script>
+	</head>
+
+	<body onload="onLoad();">
+
+		<div id="navbar">
+			<a href="index.html">Home</a>
+			<a href="about.html" onclick="return false;">About</a>
+		</div>
+
+		<div id="content"><br />
+			<h2 style="margin-bottom: 0;">Blog</h2>
+			<p style="margin-top: 0;">Coming soon!</p>
+		</div>
+
+	</body>
+
+</html>

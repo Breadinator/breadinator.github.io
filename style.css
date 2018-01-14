@@ -1,0 +1,33 @@
+body {
+	background-color: #FFFFFF;
+	color: #313131;
+	margin: 0;
+}
+
+#navbar {
+	position: fixed;
+	background-color: #C30000;
+	width: 100%;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#navbar a {
+	text-decoration: none;
+	color: #fff;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+#navbar a:hover {
+	background-color: #E74040;
+}
+
+#content {
+	margin-left: 28px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: #ECECEC;
+}
