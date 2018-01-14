@@ -26,10 +26,16 @@
 
 			function getBlog() {
 				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
+					$("#blog-content").html("");
+
 					data.forEach(function(postData) {
 						var raw = postData["download_url"];
-						$.get(raw, function(post) {
-							$("#blog-content").html($("#blog-content").html() + post);
+						$.get(raw, function(postJSON) {
+							postJSON = JSON.parse(postJSON)[0];
+
+							var title = postJSON["title"];
+							var contents = postJSON["content"];
+							$("#blog-content").html($("#blog-content").html() + "<h2>" + title + "</h2>" + "<p>" + contents + "</p><hr />");
 						});
 					});
 				});
@@ -47,10 +53,7 @@
 		</div>
 
 		<div id="content"><br />
-			<h2 style="margin-bottom: 0;">Blog</h2>
-			<p style="margin-top: 0;">Coming soon!</p>
-
-			<div id="blog-content"></div>
+			<div id="blog-content">Loading...</div>
 		</div>
 
 	</body>
