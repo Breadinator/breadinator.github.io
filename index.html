@@ -4,6 +4,7 @@
 	<head>
 		<title>Breadinator - Home</title>
 
+		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 
 		<script src="scripts/jquery-3.2.1.min.js"></script>
@@ -11,6 +12,7 @@
 		<script>
 			function onLoad() {
 				resize();
+				getBlog();
 			}
 
 			function resize() {
@@ -24,7 +26,12 @@
 
 			function getBlog() {
 				$.get("https://api.github.com/repos/Breadinator/breadinator.github.io/contents/_POSTS", function(data) {
-					//Do something
+					data.forEach(function(postData) {
+						var raw = postData["download_url"];
+						$.get(raw, function(post) {
+							$("#blog-content").html($("#blog-content").html() + post);
+						});
+					});
 				});
 			}
 
@@ -42,6 +49,8 @@
 		<div id="content"><br />
 			<h2 style="margin-bottom: 0;">Blog</h2>
 			<p style="margin-top: 0;">Coming soon!</p>
+
+			<div id="blog-content"></div>
 		</div>
 
 	</body>
