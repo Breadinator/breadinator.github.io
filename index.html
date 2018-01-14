@@ -16,9 +16,8 @@
 				var cWidth = $(window).width() - 72;
 				$("#content").css({"width":cWidth});
 
-				var docminnav = $(document).height() - $("#navbar").height() - 4;
-				if ($("#content").height() < $(document).height() - $("#navbar").height()) {
-					$("#content").css({"height":docminnav});
+				if ($("#content").height() < $(document).height()) {
+					$("#content").css({"height":$(document).height()});
 				}
 			}
 
